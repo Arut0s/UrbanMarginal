@@ -1,7 +1,9 @@
+package modele;
+
 import java.util.ArrayList;
 
 /**
- * Gestion du jeu côté serveur
+ * Gestion du jeu cï¿½tï¿½ serveur
  *
  */
 public class JeuServeur extends Jeu {
@@ -35,13 +37,13 @@ public class JeuServeur extends Jeu {
 
 	/**
 	 * Envoi d'une information vers tous les clients
-	 * fais appel plusieurs fois à l'envoi de la classe Jeu
+	 * fais appel plusieurs fois ï¿½ l'envoi de la classe Jeu
 	 */
 	public void envoi() {
 	}
 
 	/**
-	 * Génération des murs
+	 * Gï¿½nï¿½ration des murs
 	 */
 	public void constructionMurs() {
 	}

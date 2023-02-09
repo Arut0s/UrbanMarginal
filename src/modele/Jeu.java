@@ -1,21 +1,23 @@
+package modele;
+
 /**
- * Informations et méthodes communes aux jeux client et serveur
+ * Informations et mï¿½thodes communes aux jeux client et serveur
  *
  */
 public abstract class Jeu {
 
 	/**
-	 * Réception d'une connexion (pour communiquer avec un ordinateur distant)
+	 * Rï¿½ception d'une connexion (pour communiquer avec un ordinateur distant)
 	 */
 	public abstract void connexion() ;
 	
 	/**
-	 * Réception d'une information provenant de l'ordinateur distant
+	 * Rï¿½ception d'une information provenant de l'ordinateur distant
 	 */
 	public abstract void reception() ;
 	
 	/**
-	 * Déconnexion de l'ordinateur distant
+	 * Dï¿½connexion de l'ordinateur distant
 	 */
 	public abstract void deconnexion() ;
 	
