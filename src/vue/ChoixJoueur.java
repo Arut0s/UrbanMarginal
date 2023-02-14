@@ -1,4 +1,5 @@
 package vue;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -10,19 +11,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
 
 public class ChoixJoueur extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtPseudo;
+	private JLabel lblPersonnage;
+	private int numPerso = 1;
+	private static final int NBPERSOS = 3;
 
 	/**
 	 * Méthodes évenementielles
 	 */
 	
 	private void lblFlechePrecedent_clic() {
-		System.out.println("Clic sur précédent");
+		numPerso = ((numPerso+1)%NBPERSOS)+1;
+		affichePerso();
 	}
 	
 	private void lblFlecheSuivant_clic() {
-		System.out.println("Clic sur Suivant");
+		numPerso = (numPerso%NBPERSOS)+1 ;
+		affichePerso();
 	}
 	
 	private void lblGo_clic() {
@@ -30,9 +40,18 @@ public class ChoixJoueur extends JFrame {
 		this.dispose();
 	}
 	
-	private JPanel contentPane;
-	private JTextField txtPseudo;
-
+	private void affichePerso() {
+		this.lblPersonnage.setIcon(new ImageIcon(ChoixJoueur.class.getResource("/personnages/perso"+this.numPerso+"marche1d1.gif")));
+	}
+	
+	private void sourisNormal() {
+		contentPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	private void sourisDoigt() {
+		contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -53,6 +72,15 @@ public class ChoixJoueur extends JFrame {
 		contentPane.setLayout(null);
 		
 		/**
+		 * Affichage personnages
+		 */
+		
+		lblPersonnage = new JLabel("");
+		lblPersonnage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPersonnage.setBounds(143, 115, 120, 121);
+		contentPane.add(lblPersonnage);
+		
+		/**
 		 * Fond du choix du joueur
 		 */
 		
@@ -71,8 +99,16 @@ public class ChoixJoueur extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				lblFlechePrecedent_clic();
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormal();
+			}
 		});
-		lblFlechePrecedent.setBounds(61, 146, 45, 43);
+		lblFlechePrecedent.setBounds(67, 146, 39, 43);
 		contentPane.add(lblFlechePrecedent);
 		
 		/**
@@ -84,6 +120,14 @@ public class ChoixJoueur extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblFlecheSuivant_clic();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormal();
 			}
 		});
 		lblFlecheSuivant.setBounds(287, 146, 45, 43);
@@ -99,6 +143,14 @@ public class ChoixJoueur extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				lblGo_clic();
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormal();
+			}
 		});
 		lblGo.setBounds(311, 199, 61, 66);
 		contentPane.add(lblGo);
@@ -111,5 +163,7 @@ public class ChoixJoueur extends JFrame {
 		txtPseudo.setBounds(143, 246, 120, 19);
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
+		
+		
 	}
 }
