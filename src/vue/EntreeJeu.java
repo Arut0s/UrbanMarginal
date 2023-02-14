@@ -1,114 +1,120 @@
 package vue;
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EntreeJeu extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField txtIP;
+import controleur.Controle;
 
 /**
- * MÃ©thodes Ã©vÃ©nementielles
+ * Frame de l'entrée dans le jeu (choix entre serveur et client)
+ * @author emds
+ *
  */
+public class EntreeJeu extends JFrame {
+
+	/**
+	 * Panel général
+	 */
+	private JPanel contentPane;
+	/**
+	 * Zone de saisie de l'IP
+	 */
+	private JTextField txtIp;
 	
+	/**
+	 * Instance du contrôleur pour communiquer avec lui
+	 */
+	private Controle controle;
+
+	/**
+	 * clic sur le bouton Start pour lancer le serveur
+	 */
+	private void btnStart_clic() {
+		this.controle.evenementEntreeJeu("serveur");
+	}
+	
+	/**
+	 * clic sur le bouton Exit pour arrêter l'application
+	 */
 	private void btnExit_clic() {
 		System.exit(0);
 	}
 	
-	private void btnStart_clic() {
-		(new Arene()).setVisible(true);
-		this.dispose();
-	}
-	
+	/**
+	 * clic sur le bouton Connect pour se connecter à un serveur
+	 */
 	private void btnConnect_clic() {
-		(new ChoixJoueur()).setVisible(true);
-		this.dispose();
+		this.controle.evenementEntreeJeu(this.txtIp.getText());
 	}
-	
-	public EntreeJeu() {
-		
-		/**
-		 * ContentPane
-		 */
-		
+
+	/**
+	 * Create the frame.
+	 * @param controle instance du contrôleur
+	 */
+	public EntreeJeu(Controle controle) {
+		setResizable(false);
+		setTitle("Urban Marginal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 366, 203);
+		setBounds(100, 100, 302, 159);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		/**
-		 * Bouton et label Start
-		 */
+		JLabel lblStartAServer = new JLabel("Start a server :");
+		lblStartAServer.setBounds(10, 11, 94, 14);
+		contentPane.add(lblStartAServer);
 		
 		JButton btnStart = new JButton("Start");
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnStart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
 				btnStart_clic();
 			}
 		});
-		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnStart.setBounds(230, 8, 97, 29);
+		btnStart.setBounds(186, 7, 89, 23);
 		contentPane.add(btnStart);
 		
-		JLabel lblStart = new JLabel("Start a server : ");
-		lblStart.setBounds(10, 18, 112, 20);
-		lblStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		contentPane.add(lblStart);
+		JLabel lblConnectAnExisting = new JLabel("Connect an existing server :");
+		lblConnectAnExisting.setBounds(10, 36, 197, 14);
+		contentPane.add(lblConnectAnExisting);
 		
-		/**
-		 * Bouton Exit
-		 */
+		JLabel lblIpServer = new JLabel("IP server :");
+		lblIpServer.setBounds(10, 61, 68, 14);
+		contentPane.add(lblIpServer);
+		
+		JButton btnConnect = new JButton("Connect");
+		btnConnect.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnConnect_clic() ;
+			}
+		});
+		btnConnect.setBounds(186, 57, 89, 23);
+		contentPane.add(btnConnect);
+		
+		txtIp = new JTextField();
+		txtIp.setText("127.0.0.1");
+		txtIp.setBounds(69, 58, 107, 20);
+		contentPane.add(txtIp);
+		txtIp.setColumns(10);
 		
 		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				btnExit_clic();
 			}
 		});
-		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnExit.setBounds(230, 113, 97, 29);
+		btnExit.setBounds(186, 91, 89, 23);
 		contentPane.add(btnExit);
 		
-		/**
-		 * Zone de connection
-		 */
-		
-		JButton btnConnect = new JButton("Connect");
-		btnConnect.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnConnect_clic();
-			}
-		});
-		btnConnect.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnConnect.setBounds(230, 74, 97, 29);
-		contentPane.add(btnConnect);
-		
-		JLabel lblConnectAnExisting = new JLabel("Connect an existing server :");
-		lblConnectAnExisting.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblConnectAnExisting.setBounds(10, 48, 219, 20);
-		contentPane.add(lblConnectAnExisting);
-		
-		JLabel lblIpServer = new JLabel("IP server:");
-		lblIpServer.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblIpServer.setBounds(10, 78, 69, 20);
-		contentPane.add(lblIpServer);
-		
-		txtIP = new JTextField();
-		txtIP.setText("127.0.0.1");
-		txtIP.setBounds(85, 81, 129, 19);
-		contentPane.add(txtIP);
-		txtIP.setColumns(10);
+		// récupération de l'instance de Controle
+		this.controle = controle;
 	}
+
 }
