@@ -9,14 +9,14 @@ import vue.ChoixJoueur;
 import vue.EntreeJeu;
 
 /**
- * Contrôleur et point d'entrée de l'applicaton 
+ * ContrÃ´leur et point d'entrÃ©e de l'applicaton 
  * @author emds
  *
  */
 public class Controle implements AsyncResponse {
 
 	/**
-	 * N° du port d'écoute du serveur
+	 * NÂ° du port d'Ã©coute du serveur
 	 */
 	private static final int PORT = 6666;
 	/**
@@ -37,8 +37,8 @@ public class Controle implements AsyncResponse {
 	private String typeJeu;
 
 	/**
-	 * Méthode de démarrage
-	 * @param args non utilisé
+	 * MÃ©thode de dÃ©marrage
+	 * @param args non utilisÃ©
 	 */
 	public static void main(String[] args) {
 		new Controle();
@@ -54,7 +54,7 @@ public class Controle implements AsyncResponse {
 	
 	/**
 	 * Demande provenant de la vue EntreeJeu
-	 * @param info information à traiter
+	 * @param info information Ã  traiter
 	 */
 	public void evenementEntreeJeu(String info) {
 		if(info.equals("serveur")) {
@@ -67,7 +67,16 @@ public class Controle implements AsyncResponse {
 			this.typeJeu = "client";
 			new ClientSocket(this, info, PORT);
 		}
-		
+	}
+	
+	/**
+	 * Informations provenant de la vue ChoixJoueur
+	 * @param pseudo le pseudo du joueur
+	 * @param numPerso le numÃ©ro du personnage choisi par le joueur
+	 */
+	public void evenementChoixJoueur(String pseudo, int numPerso) {
+		this.frmChoixJoueur.dispose();
+		this.frmArene.setVisible(true);
 	}
 
 	@Override
@@ -77,13 +86,13 @@ public class Controle implements AsyncResponse {
 			if(this.typeJeu.equals("client")) {
 				this.frmEntreeJeu.dispose();
 				this.frmArene = new Arene();
-				this.frmChoixJoueur = new ChoixJoueur();
+				this.frmChoixJoueur = new ChoixJoueur(this);
 				this.frmChoixJoueur.setVisible(true);
 			}
 			break;
-		case "réception" :
+		case "rÃ©ception" :
 			break;
-		case "déconnexion" :
+		case "dÃ©connexion" :
 			break;
 		}
 		

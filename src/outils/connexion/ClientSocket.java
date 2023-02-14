@@ -23,7 +23,7 @@ public class ClientSocket {
 		try {
 			Socket socket = new Socket(ip, port);
 			System.out.println("connexion serveur réussie");
-			// la connexion ne peut se faire que si un objet delegate existe (pour r�cup�rer la réponse)
+			// la connexion ne peut se faire que si un objet delegate existe (pour récupérer la réponse)
 			if(delegate != null) {
 				// création d'une connexion pour ce client, pour la communication avec le serveur (envoi et réception d'informations)
 				new Connection(socket, delegate) ;

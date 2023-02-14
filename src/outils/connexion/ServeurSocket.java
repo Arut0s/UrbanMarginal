@@ -23,10 +23,10 @@ public class ServeurSocket extends Thread {
 	/**
 	 * Constructeur
 	 * @param delegate instance de la classe vers laquelle il faut transférer les réponses
-	 * @param port numéro port d'�coute du serveur
+	 * @param port numéro port d'écoute du serveur
 	 */
 	public ServeurSocket(AsyncResponse delegate, int port) {
-		// création du socket serveur d'�coute des clients
+		// création du socket serveur d'écoute des clients
 		try {
 			this.delegate = delegate;
 			this.serverSocket = new ServerSocket(port);
@@ -53,7 +53,7 @@ public class ServeurSocket extends Thread {
 				// attente d'une connexion
 				System.out.println("le serveur attend");
 				socket = serverSocket.accept();
-				System.out.println("un client s'est connect�");
+				System.out.println("un client s'est connecté");
 				// création d'une connexion vers ce client, pour la communication (envoi et réception d'informations)
 				new Connection(socket, delegate);
 			} catch (IOException e) {

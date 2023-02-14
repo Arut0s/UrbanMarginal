@@ -70,7 +70,7 @@ public class Connection extends Thread {
 	}
 	
 	/**
-	 * M�thode thread qui permet d'attendre des messages provenant de l'ordi distant
+	 * Méthode thread qui permet d'attendre des messages provenant de l'ordi distant
 	 */
 	public void run() {
 		// permet de savoir s'il faut continuer à écouter

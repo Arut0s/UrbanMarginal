@@ -1,103 +1,132 @@
 package vue;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import controleur.Controle;
+
+import java.awt.Cursor;
+import java.awt.Dimension;
+
+/**
+ * Frame du choix du joueur
+ * @author emds
+ *
+ */
 public class ChoixJoueur extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtPseudo;
-	private JLabel lblPersonnage;
-	private int numPerso = 1;
+	/**
+	 * Nombre de personnages différents
+	 */
 	private static final int NBPERSOS = 3;
+	/**
+	 * Panel général
+	 */
+	private JPanel contentPane;
+	/**
+	 * Zone de saisie du pseudo
+	 */
+	private JTextField txtPseudo;
+	/**
+	 * Label d'affichage du personnage
+	 */
+	private JLabel lblPersonnage;
+	/**
+	 * Instance du contrôleur pour communiquer avec lui
+	 */
+	private Controle controle;
+	/**
+	 * Numéro du personnage sélectionné
+	 */
+	private int numPerso;
 
 	/**
-	 * Méthodes évenementielles
+	 * Clic sur la flèche "précédent" pour afficher le personnage précédent
 	 */
-	
-	private void lblFlechePrecedent_clic() {
+	private void lblPrecedent_clic() {
 		numPerso = ((numPerso+1)%NBPERSOS)+1;
 		affichePerso();
 	}
 	
-	private void lblFlecheSuivant_clic() {
+	/**
+	 * Clic sur la flèche "suivant" pour afficher le personnage suivant
+	 */
+	private void lblSuivant_clic() {
 		numPerso = (numPerso%NBPERSOS)+1 ;
 		affichePerso();
 	}
 	
+	/**
+	 * Clic sur GO pour envoyer les informations
+	 */
 	private void lblGo_clic() {
-		(new Arene()).setVisible(true);
-		this.dispose();
-	}
-	
-	private void affichePerso() {
-		this.lblPersonnage.setIcon(new ImageIcon(ChoixJoueur.class.getResource("/personnages/perso"+this.numPerso+"marche1d1.gif")));
-	}
-	
-	private void sourisNormal() {
-		contentPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-	}
-	
-	private void sourisDoigt() {
-		contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		if(this.txtPseudo.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "La saisie du pseudo est obligatoire");
+			this.txtPseudo.requestFocus();
+		} else {
+			this.controle.evenementChoixJoueur(this.txtPseudo.getText(), numPerso);
+		}
 	}
 	
 	/**
-	 * Create the frame.
+	 * Affichage du personnage correspondant au numéro numPerso
 	 */
-	public ChoixJoueur() {
-		
-		/**
-		 * ContentPane
-		 */
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	private void affichePerso() {
+		String chemin = "personnages/perso"+this.numPerso+"marche"+1+"d"+1+".gif";
+		URL resource = getClass().getClassLoader().getResource(chemin);
+		this.lblPersonnage.setIcon(new ImageIcon(resource));		
+	}
+
+	/**
+	 * Change le curseur de la souris en forme normale
+	 */
+	private void sourisNormale() {
+		contentPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	/**
+	 * Change le curseur de la souris en forme de doigt pointé
+	 */
+	private void sourisDoigt() {
+		contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	/**
+	 * Create the frame.
+	 * @param controle instance du contrôleur
+	 */
+	public ChoixJoueur(Controle controle) {
+		// Dimension de la frame en fonction de son contenu
 		this.getContentPane().setPreferredSize(new Dimension(400, 275));
-		this.pack();
+	    this.pack();
+	    // interdiction de changer la taille
 		this.setResizable(false);
+		 
+		setTitle("Choice");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		/**
-		 * Affichage personnages
-		 */
-		
+
 		lblPersonnage = new JLabel("");
+		lblPersonnage.setBounds(142, 115, 120, 120);
 		lblPersonnage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPersonnage.setBounds(143, 115, 120, 121);
 		contentPane.add(lblPersonnage);
 		
-		/**
-		 * Fond du choix du joueur
-		 */
-		
-		JLabel lblChoixJoueur = new JLabel("");
-		lblChoixJoueur.setIcon(new ImageIcon(ChoixJoueur.class.getResource("/fonds/fondchoix.jpg")));
-		lblChoixJoueur.setBounds(0, 0, 400, 275);
-		contentPane.add(lblChoixJoueur);
-		
-		/**
-		 * Label pour flèche précédent
-		 */
-		
-		JLabel lblFlechePrecedent = new JLabel("");
-		lblFlechePrecedent.addMouseListener(new MouseAdapter() {
+		JLabel lblPrecedent = new JLabel("");
+		lblPrecedent.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				lblFlechePrecedent_clic();
+			public void mouseClicked(MouseEvent arg0) {
+				lblPrecedent_clic();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -105,21 +134,15 @@ public class ChoixJoueur extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				sourisNormal();
+				sourisNormale();
 			}
 		});
-		lblFlechePrecedent.setBounds(67, 146, 39, 43);
-		contentPane.add(lblFlechePrecedent);
 		
-		/**
-		 * Label flèche suivant
-		 */
-		
-		JLabel lblFlecheSuivant = new JLabel("");
-		lblFlecheSuivant.addMouseListener(new MouseAdapter() {
+		JLabel lblSuivant = new JLabel("");
+		lblSuivant.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lblFlecheSuivant_clic();
+				lblSuivant_clic();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -127,15 +150,9 @@ public class ChoixJoueur extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				sourisNormal();
+				sourisNormale();
 			}
 		});
-		lblFlecheSuivant.setBounds(287, 146, 45, 43);
-		contentPane.add(lblFlecheSuivant);
-		
-		/**
-		 * Label bouton go
-		 */
 		
 		JLabel lblGo = new JLabel("");
 		lblGo.addMouseListener(new MouseAdapter() {
@@ -149,21 +166,38 @@ public class ChoixJoueur extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				sourisNormal();
+				sourisNormale();
 			}
 		});
-		lblGo.setBounds(311, 199, 61, 66);
-		contentPane.add(lblGo);
-		
-		/**
-		 * Zone de saisie du pseudo
-		 */
 		
 		txtPseudo = new JTextField();
-		txtPseudo.setBounds(143, 246, 120, 19);
+		txtPseudo.setBounds(142, 245, 120, 20);
 		contentPane.add(txtPseudo);
 		txtPseudo.setColumns(10);
 		
+		lblGo.setBounds(311, 202, 65, 61);
+		contentPane.add(lblGo);
+		lblSuivant.setBounds(301, 145, 25, 46);
+		contentPane.add(lblSuivant);
+		lblPrecedent.setBounds(65, 146, 31, 45);
+		contentPane.add(lblPrecedent);
 		
+		JLabel lblFond = new JLabel("");
+		lblFond.setBounds(0, 0, 400, 275);
+		String chemin = "fonds/fondchoix.jpg";
+		URL resource = getClass().getClassLoader().getResource(chemin);
+		lblFond.setIcon(new ImageIcon(resource));		
+		contentPane.add(lblFond);
+		
+		// récupération de l'instance de Controle
+		this.controle = controle;
+		
+		// affichage du premier personnage
+		this.numPerso = 1;
+		this.affichePerso();
+
+		// positionnement sur la zone de saisie
+		txtPseudo.requestFocus();
+
 	}
 }
