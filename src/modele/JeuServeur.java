@@ -8,7 +8,7 @@ import controleur.Global;
 import outils.connexion.Connection;
 
 /**
- * Gestion du jeu côté serveur
+ * Gestion du jeu cÃ´tÃ© serveur
  *
  */
 public class JeuServeur extends Jeu implements Global {
@@ -18,13 +18,13 @@ public class JeuServeur extends Jeu implements Global {
 	 */
 	private ArrayList<Mur> lesMurs = new ArrayList<Mur>() ;
 	/**
-	 * Dictionnaire de joueurs indexé sur leur objet de connexion
+	 * Dictionnaire de joueurs indexÃ©s sur leur objet de connexion
 	 */
 	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
 	
 	/**
 	 * Constructeur
-	 * @param controle instance du contrôleur pour les échanges
+	 * @param controle instance du contrÃ´leur pour les Ã©changes
 	 */
 	public JeuServeur(Controle controle) {
 		super.controle = controle;
@@ -54,13 +54,13 @@ public class JeuServeur extends Jeu implements Global {
 
 	/**
 	 * Envoi d'une information vers tous les clients
-	 * fais appel plusieurs fois à l'envoi de la classe Jeu
+	 * fais appel plusieurs fois Ã  l'envoi de la classe Jeu
 	 */
 	public void envoi() {
 	}
 
 	/**
-	 * Génération des murs
+	 * GÃ©nÃ©ration des murs
 	 */
 	public void constructionMurs() {
 	}

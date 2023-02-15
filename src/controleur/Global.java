@@ -11,15 +11,15 @@ package controleur;
 public interface Global {
 	
 	/**
-	 * N° du port d'écoute du serveur
+	 * NÂ° du port d'Ã©coute du serveur
 	 */
 	int PORT = 6666;
 	/**
-	 * Nombre de personnages différents
+	 * Nombre de personnages diffÃ©rents
 	 */
 	int NBPERSOS = 3;
 	/**
-	 * Caractère de séparation dans un chemin de fichiers
+	 * CaractÃ¨re de sÃ©paration dans un chemin de fichiers
 	 */
 	String CHEMINSEPARATOR = "/";
 	/**
@@ -55,7 +55,7 @@ public interface Global {
 	 */
 	String EXTFICHIERPERSO = ".gif";
 	/**
-	 * Début du nom des images des personnages
+	 * DÃ©but du nom des images des personnages
 	 */
 	String PERSO = "perso";
 	/**
@@ -67,39 +67,39 @@ public interface Global {
 	 */
 	String MUR = CHEMINMURS+"mur.gif";
 	/**
-	 * état marche du personnage
+	 * Ã‰tat marche du personnage
 	 */
 	String MARCHE = "marche";
 	/**
-	 * état touché du personnage
+	 * Ã‰tat touchÃ© du personnage
 	 */
 	String TOUCHE = "touche";
 	/**
-	 * état mort du personnage
+	 * Ã‰tat mort du personnage
 	 */
 	String MORT = "mort";
 	/**
-	 * Caractère de séparation dans les chaines transférées
+	 * CaractÃ¨re de sÃ©paration dans les chaines transformÃ©es
 	 */
 	String STRINGSEPARE = "~";
 	/**
-	 * Message "connexion" envoyé par la classe Connection
+	 * Message "connexion" envoyÃ© par la classe Connection
 	 */
 	String CONNEXION = "connexion";
 	/**
-	 * Message "réception" envoyé par la classe Connection
+	 * Message "rÃ©ception" envoyÃ© par la classe Connection
 	 */
-	String RECEPTION = "réception";
+	String RECEPTION = "rÃ©ception";
 	/**
-	 * Message "déconnexion" envoyé par la classe Connection
+	 * Message "dÃ©connexion" envoyÃ© par la classe Connection
 	 */
-	String DECONNEXION = "déconnexion";
+	String DECONNEXION = "dÃ©connexion";
 	/**
-	 * Message "pseudo" envoyé pour la création d'un joueur
+	 * Message "pseudo" envoyÃ© pour la crÃ©ation d'un joueur
 	 */
 	String PSEUDO = "pseudo";
 	/**
-	 * vie de départ pour tous les joueurs
+	 * vie de dÃ©part pour tous les joueurs
 	 */
 	int MAXVIE = 10 ;
 	/**

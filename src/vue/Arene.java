@@ -14,14 +14,14 @@ import javax.swing.JTextField;
 import controleur.Global;
 
 /**
- * frame de l'arène du jeu
+ * frame de l'arÃ¨ne du jeu
  * @author emds
  *
  */
 public class Arene extends JFrame implements Global {
 
 	/**
-	 * Panel général
+	 * Panel gÃ©nÃ©ral
 	 */
 	private JPanel contentPane;
 	/**

@@ -12,7 +12,7 @@ import vue.ChoixJoueur;
 import vue.EntreeJeu;
 
 /**
- * Contrôleur et point d'entrée de l'applicaton 
+ * ContrÃ´leur et point d'entrÃ©e de l'applicaton 
  * @author emds
  *
  */
@@ -36,8 +36,8 @@ public class Controle implements AsyncResponse, Global {
 	private Jeu leJeu;
 
 	/**
-	 * Méthode de démarrage
-	 * @param args non utilisé
+	 * MÃ©thode de dÃ©marrage
+	 * @param args non utilisÃ©
 	 */
 	public static void main(String[] args) {
 		new Controle();
@@ -53,7 +53,7 @@ public class Controle implements AsyncResponse, Global {
 	
 	/**
 	 * Demande provenant de la vue EntreeJeu
-	 * @param info information à traiter
+	 * @param info information Ã  traiter
 	 */
 	public void evenementEntreeJeu(String info) {
 		if(info.equals("serveur")) {
@@ -70,7 +70,7 @@ public class Controle implements AsyncResponse, Global {
 	/**
 	 * Informations provenant de la vue ChoixJoueur
 	 * @param pseudo le pseudo du joueur
-	 * @param numPerso le numéro du personnage choisi par le joueur
+	 * @param numPerso le numÃ©ro du personnage choisi par le joueur
 	 */
 	public void evenementChoixJoueur(String pseudo, int numPerso) {
 		this.frmChoixJoueur.dispose();
@@ -81,7 +81,7 @@ public class Controle implements AsyncResponse, Global {
 	/**
 	 * Envoi d'informations vers l'ordinateur distant
 	 * @param connection objet de connexion pour l'envoi vers l'ordinateur distant
-	 * @param info information à envoyer
+	 * @param info information Ã  envoyer
 	 */
 	public void envoi(Connection connection, Object info) {
 		connection.envoi(info);
