@@ -25,6 +25,10 @@ public class Arene extends JFrame implements Global {
 	 */
 	private JPanel contentPane;
 	/**
+	 *Panel pour les murs
+	 */
+	private JPanel jpnMurs;
+	/**
 	 * Zone de saisie du t'chat
 	 */
 	private JTextField txtSaisie;
@@ -32,6 +36,22 @@ public class Arene extends JFrame implements Global {
 	 * Zone d'affichage du t'chat
 	 */
 	private JTextArea txtChat ;
+	
+	/**
+	 * @param jpnMurs the jpnMurs to set
+	 */
+	public void setJpnMurs(JPanel jpnMurs) {
+		this.jpnMurs.add(jpnMurs);
+		this.jpnMurs.repaint();
+	}
+	
+	/**
+	 * Ajoute un mur dans le Panel jpnMurs
+	 */
+	public void ajoutMurs(Object unMur) {
+		jpnMurs.add((JLabel)unMur);
+		jpnMurs.repaint();
+	}
 
 	/**
 	 * Create the frame.
@@ -48,6 +68,12 @@ public class Arene extends JFrame implements Global {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		jpnMurs = new JPanel();
+		jpnMurs.setBounds(0, 0, LARGEURARENE, HAUTEURARENE);
+		jpnMurs.setOpaque(false);
+		jpnMurs.setLayout(null);		
+		contentPane.add(jpnMurs);
 	
 		txtSaisie = new JTextField();
 		txtSaisie.setBounds(0, 600, 800, 25);

@@ -99,6 +99,10 @@ public interface Global {
 	 */
 	String PSEUDO = "pseudo";
 	/**
+	 * Ordre pour ajouter un mur dans l'arène du serveur
+	 */
+	String AJOUTMUR = "ajout mur";
+	/**
 	 * vie de départ pour tous les joueurs
 	 */
 	int MAXVIE = 10 ;
@@ -110,5 +114,24 @@ public interface Global {
 	 * perte de points de vie lors d'une attaque
 	 */
 	int PERTE = 2 ; 
-
+	/**
+	 * Hauteur de la zone de jeu de l'arène
+	 */
+	int HAUTEURARENE = 600;
+	/**
+	 * Largeur de la zone de jeu de l'arène
+	 */
+	int LARGEURARENE = 800;
+	/**
+	 * Hauteur d'un mur
+	 */
+	int HAUTEURMUR = 35;
+	/**
+	 * Largeur d'un mur
+	 */
+	int LARGEURMUR = 34;
+	/**
+	 * Nombre de murs
+	 */
+	int NBMURS = 20;
 }

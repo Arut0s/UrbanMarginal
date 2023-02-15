@@ -63,6 +63,10 @@ public class JeuServeur extends Jeu implements Global {
 	 * Génération des murs
 	 */
 	public void constructionMurs() {
+		for(int k=0; k < NBMURS ;k++) {
+			this.lesMurs.add(new Mur());
+			this.controle.evenementJeuServeur(AJOUTMUR, lesMurs.get(lesMurs.size()-1).getjLabel());
+		}
 	}
 	
 }

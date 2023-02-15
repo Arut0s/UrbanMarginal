@@ -61,6 +61,7 @@ public class Controle implements AsyncResponse, Global {
 			this.leJeu = new JeuServeur(this);
 			this.frmEntreeJeu.dispose();
 			this.frmArene = new Arene();
+			((JeuServeur)this.leJeu).constructionMurs();
 			this.frmArene.setVisible(true);
 		} else {
 			new ClientSocket(this, info, PORT);
@@ -76,6 +77,14 @@ public class Controle implements AsyncResponse, Global {
 		this.frmChoixJoueur.dispose();
 		this.frmArene.setVisible(true);
 		((JeuClient)this.leJeu).envoi(PSEUDO+STRINGSEPARE+pseudo+STRINGSEPARE+numPerso);
+	}
+	
+	public void evenementJeuServeur(String ordre, Object info) {
+		switch(ordre) {
+		case AJOUTMUR:
+			frmArene.ajoutMurs(info);
+			break;
+		}
 	}
 
 	/**
