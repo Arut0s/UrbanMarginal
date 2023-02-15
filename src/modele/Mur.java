@@ -1,30 +1,32 @@
 package modele;
 
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import controleur.Global;
-import java.net.URL;
 
 /**
  * Gestion des murs
  *
  */
-public class Mur extends Objet implements Global{
+public class Mur extends Objet implements Global {
 
 	/**
-	 * Constructeur : crÃ©er un mur Ã  une position alÃ©atoire et lui affecte une image de mur
+	 * Constructeur : crée un mur (position aléatoire, image)
 	 */
 	public Mur() {
-		//Position alÃ©atoire du mur
-		posX = (int) Math.round(Math.random()*(LARGEURARENE-LARGEURMUR));
-		posY = (int) Math.round(Math.random()*(HAUTEURARENE-HAUTEURMUR));
-		//CrÃ©ation label
-		JLabel jLabel = new JLabel();
-		//caractÃ©ristiques du mur (image et taille)
-		jLabel.setBounds(posX,posY,LARGEURMUR,HAUTEURMUR);
+		// calcul position aléatoire du mur
+		posX = (int) Math.round(Math.random() * (LARGEURARENE - LARGEURMUR)) ;
+		posY = (int) Math.round(Math.random() * (HAUTEURARENE - HAUTEURMUR)) ;
+		// création du jLabel pour ce mur
+		jLabel = new JLabel();
+		// caractéristiques du mur (position, image)
+		jLabel.setBounds(posX, posY, LARGEURMUR, HAUTEURMUR);
 		URL resource = getClass().getClassLoader().getResource(MUR);
 		jLabel.setIcon(new ImageIcon(resource));
+
 	}
 	
 }
-

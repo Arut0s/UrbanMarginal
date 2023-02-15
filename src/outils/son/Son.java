@@ -15,12 +15,12 @@ import java.net.URL;
 public class Son implements Serializable {
 
 	/**
-	 * son qui peut Ãªtre jouÃ©
+	 * son qui peut être joué
 	 */
     private Sound sound ;
 
     /**
-     * CrÃ©ation d'un objet de type Sound, Ã  partir d'un fichier de son
+     * Création d'un objet de type Sound, à partir d'un fichier de son
      * @param nomfic url du fichier
      */
     public Son (URL nomfic) {
@@ -39,7 +39,7 @@ public class Son implements Serializable {
     }
 
     /**
-     * ferme le son (libÃ¨re l'objet de la mÃ©moire)
+     * ferme le son (libère l'objet de la mémoire)
      */
     public void close() {
         this.sound.fermer();

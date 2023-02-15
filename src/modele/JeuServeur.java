@@ -8,7 +8,7 @@ import controleur.Global;
 import outils.connexion.Connection;
 
 /**
- * Gestion du jeu cÃ´tÃ© serveur
+ * Gestion du jeu côté serveur
  *
  */
 public class JeuServeur extends Jeu implements Global {
@@ -18,13 +18,13 @@ public class JeuServeur extends Jeu implements Global {
 	 */
 	private ArrayList<Mur> lesMurs = new ArrayList<Mur>() ;
 	/**
-	 * Dictionnaire de joueurs indexÃ©s sur leur objet de connexion
+	 * Dictionnaire de joueurs indexé sur leur objet de connexion
 	 */
 	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
 	
 	/**
 	 * Constructeur
-	 * @param controle instance du contrÃ´leur pour les Ã©changes
+	 * @param controle instance du contrôleur pour les échanges
 	 */
 	public JeuServeur(Controle controle) {
 		super.controle = controle;
@@ -41,6 +41,8 @@ public class JeuServeur extends Jeu implements Global {
 		String ordre = infos[0];
 		switch(ordre) {
 		case PSEUDO :
+			// arrivée des informations d'un nouveau joueur
+			controle.evenementJeuServeur(AJOUTPANELMURS, connection);
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
 			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
@@ -54,16 +56,16 @@ public class JeuServeur extends Jeu implements Global {
 
 	/**
 	 * Envoi d'une information vers tous les clients
-	 * fais appel plusieurs fois Ã  l'envoi de la classe Jeu
+	 * fais appel plusieurs fois à l'envoi de la classe Jeu
 	 */
 	public void envoi() {
 	}
 
 	/**
-	 * GÃ©nÃ©ration des murs
+	 * Génération des murs
 	 */
 	public void constructionMurs() {
-		for(int k=0; k < NBMURS ;k++) {
+		for(int k=0 ; k < NBMURS ; k++) {
 			this.lesMurs.add(new Mur());
 			this.controle.evenementJeuServeur(AJOUTMUR, lesMurs.get(lesMurs.size()-1).getjLabel());
 		}
