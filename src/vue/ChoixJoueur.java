@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controleur.Controle;
+import controleur.Global;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -22,14 +23,10 @@ import java.awt.Dimension;
  * @author emds
  *
  */
-public class ChoixJoueur extends JFrame {
+public class ChoixJoueur extends JFrame implements Global {
 
 	/**
-	 * Nombre de personnages diff√©rents
-	 */
-	private static final int NBPERSOS = 3;
-	/**
-	 * Panel g√©n√©ral
+	 * Panel gÈnÈral
 	 */
 	private JPanel contentPane;
 	/**
@@ -41,16 +38,16 @@ public class ChoixJoueur extends JFrame {
 	 */
 	private JLabel lblPersonnage;
 	/**
-	 * Instance du contr√¥leur pour communiquer avec lui
+	 * Instance du contrÙleur pour communiquer avec lui
 	 */
 	private Controle controle;
 	/**
-	 * Num√©ro du personnage s√©lectionn√©
+	 * NumÈro du personnage sÈlectionnÈ
 	 */
 	private int numPerso;
 
 	/**
-	 * Clic sur la fl√®che "pr√©c√©dent" pour afficher le personnage pr√©c√©dent
+	 * Clic sur la flËche "prÈcÈdent" pour afficher le personnage prÈcÈdent
 	 */
 	private void lblPrecedent_clic() {
 		numPerso = ((numPerso+1)%NBPERSOS)+1;
@@ -58,7 +55,7 @@ public class ChoixJoueur extends JFrame {
 	}
 	
 	/**
-	 * Clic sur la fl√®che "suivant" pour afficher le personnage suivant
+	 * Clic sur la flËche "suivant" pour afficher le personnage suivant
 	 */
 	private void lblSuivant_clic() {
 		numPerso = (numPerso%NBPERSOS)+1 ;
@@ -78,10 +75,10 @@ public class ChoixJoueur extends JFrame {
 	}
 	
 	/**
-	 * Affichage du personnage correspondant au num√©ro numPerso
+	 * Affichage du personnage correspondant au numÈro numPerso
 	 */
 	private void affichePerso() {
-		String chemin = "personnages/perso"+this.numPerso+"marche"+1+"d"+1+".gif";
+		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+MARCHE+1+"d"+1+EXTFICHIERPERSO;
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		this.lblPersonnage.setIcon(new ImageIcon(resource));		
 	}
@@ -94,7 +91,7 @@ public class ChoixJoueur extends JFrame {
 	}
 	
 	/**
-	 * Change le curseur de la souris en forme de doigt point√©
+	 * Change le curseur de la souris en forme de doigt pointÈ
 	 */
 	private void sourisDoigt() {
 		contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -102,7 +99,7 @@ public class ChoixJoueur extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param controle instance du contr√¥leur
+	 * @param controle instance du contrÙleur
 	 */
 	public ChoixJoueur(Controle controle) {
 		// Dimension de la frame en fonction de son contenu
@@ -184,12 +181,11 @@ public class ChoixJoueur extends JFrame {
 		
 		JLabel lblFond = new JLabel("");
 		lblFond.setBounds(0, 0, 400, 275);
-		String chemin = "fonds/fondchoix.jpg";
-		URL resource = getClass().getClassLoader().getResource(chemin);
+		URL resource = getClass().getClassLoader().getResource(FONDCHOIX);
 		lblFond.setIcon(new ImageIcon(resource));		
 		contentPane.add(lblFond);
 		
-		// r√©cup√©ration de l'instance de Controle
+		// rÈcupÈration de l'instance de Controle
 		this.controle = controle;
 		
 		// affichage du premier personnage

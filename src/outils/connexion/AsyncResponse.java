@@ -1,16 +1,16 @@
 package outils.connexion;
 
 /**
- * Permet la rÃ©cupÃ©ration asynchrone d'une rÃ©ponse
+ * Permet la récupération asynchrone d'une réponse
  * @author emds
  *
  */
 public interface AsyncResponse {
 	/**
-	 * MÃ©thode Ã  redÃ©finir pour rÃ©cupÃ©rer la rÃ©ponse de l'ordinateur distant
+	 * Méthode à redéfinir pour récupérer la réponse de l'ordinateur distant
 	 * @param connection contient l'objet qui permet de recontacter l'ordinateur distant (pour un envoi)
-	 * @param ordre contient "connexion" si nouvelle connexion, "rÃ©ception" si nouvelle information reÃ§ue, "dÃ©connexion" si dÃ©connexion
-	 * @param info contient l'information reÃ§ue (si ordre = "rÃ©ception")
+	 * @param ordre contient "connexion" si nouvelle connexion, "réception" si nvelle information reçue, "déconnexion" si déconnexion
+	 * @param info contient l'information reçue (si ordre = "réception")
 	 */
     void reception(Connection connection, String ordre, Object info);
 }

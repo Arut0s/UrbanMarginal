@@ -11,23 +11,22 @@ import javax.swing.JTextField;
 import controleur.Controle;
 
 /**
- * Frame de l'entrÃ©e dans le jeu (choix entre serveur et client)
+ * Frame de l'entrée dans le jeu (choix entre serveur et client)
  * @author emds
  *
  */
 public class EntreeJeu extends JFrame {
 
 	/**
-	 * Panel gÃ©nÃ©ral
+	 * Panel général
 	 */
 	private JPanel contentPane;
 	/**
 	 * Zone de saisie de l'IP
 	 */
-	private JTextField txtIp;
-	
+	private JTextField txtIp;	
 	/**
-	 * Instance du contrÃ´leur pour communiquer avec lui
+	 * Instance du contrôleur pour communiquer avec lui
 	 */
 	private Controle controle;
 
@@ -39,14 +38,14 @@ public class EntreeJeu extends JFrame {
 	}
 	
 	/**
-	 * clic sur le bouton Exit pour arrÃªter l'application
+	 * clic sur le bouton Exit pour arrêter l'application
 	 */
 	private void btnExit_clic() {
 		System.exit(0);
 	}
 	
 	/**
-	 * clic sur le bouton Connect pour se connecter Ã  un serveur
+	 * clic sur le bouton Connect pour se connecter à un serveur
 	 */
 	private void btnConnect_clic() {
 		this.controle.evenementEntreeJeu(this.txtIp.getText());
@@ -54,7 +53,7 @@ public class EntreeJeu extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param controle instance du contrÃ´leur
+	 * @param controle instance du contrôleur
 	 */
 	public EntreeJeu(Controle controle) {
 		setResizable(false);
@@ -113,7 +112,7 @@ public class EntreeJeu extends JFrame {
 		btnExit.setBounds(186, 91, 89, 23);
 		contentPane.add(btnExit);
 		
-		// rÃ©cupÃ©ration de l'instance de Controle
+		// récupération de l'instance de Controle
 		this.controle = controle;
 	}
 

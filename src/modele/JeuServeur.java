@@ -1,28 +1,30 @@
 package modele;
 
-import controleur.Controle;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import controleur.Controle;
+import controleur.Global;
 import outils.connexion.Connection;
 
 /**
- * Gestion du jeu cï¿½tï¿½ serveur
+ * Gestion du jeu côté serveur
  *
  */
-public class JeuServeur extends Jeu {
+public class JeuServeur extends Jeu implements Global {
 
 	/**
 	 * Collection de murs
 	 */
 	private ArrayList<Mur> lesMurs = new ArrayList<Mur>() ;
 	/**
-	 * Collection de joueurs
+	 * Dictionnaire de joueurs indexé sur leur objet de connexion
 	 */
-	private Hashtable<Connection,Joueur> lesJoueurs = new Hashtable<Connection,Joueur>() ;
+	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
 	
 	/**
 	 * Constructeur
+	 * @param controle instance du contrôleur pour les échanges
 	 */
 	public JeuServeur(Controle controle) {
 		super.controle = controle;
@@ -34,7 +36,16 @@ public class JeuServeur extends Jeu {
 	}
 
 	@Override
-	public void reception() {
+	public void reception(Connection connection, Object info) {
+		String[] infos = ((String)info).split(STRINGSEPARE);
+		String ordre = infos[0];
+		switch(ordre) {
+		case PSEUDO :
+			String pseudo = infos[1];
+			int numPerso = Integer.parseInt(infos[2]);
+			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
+			break;
+		}
 	}
 	
 	@Override
@@ -43,13 +54,13 @@ public class JeuServeur extends Jeu {
 
 	/**
 	 * Envoi d'une information vers tous les clients
-	 * fais appel plusieurs fois ï¿½ l'envoi de la classe Jeu
+	 * fais appel plusieurs fois à l'envoi de la classe Jeu
 	 */
 	public void envoi() {
 	}
 
 	/**
-	 * Gï¿½nï¿½ration des murs
+	 * Génération des murs
 	 */
 	public void constructionMurs() {
 	}
