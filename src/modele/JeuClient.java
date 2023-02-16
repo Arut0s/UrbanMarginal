@@ -7,24 +7,27 @@ import controleur.Global;
 import outils.connexion.Connection;
 
 /**
- * Gestion du jeu côté client
+ * Gestion du jeu cï¿½tï¿½ client
  *
  */
 public class JeuClient extends Jeu implements Global {
-	
+
 	/**
 	 * objet de connexion pour communiquer avec le serveur
 	 */
 	private Connection connection;
 	
+	private Boolean mursOk = false;
+
 	/**
 	 * Controleur
-	 * @param controle instance du contrôleur pour les échanges
+	 * 
+	 * @param controle instance du contrï¿½leur pour les ï¿½changes
 	 */
 	public JeuClient(Controle controle) {
 		super.controle = controle;
 	}
-	
+
 	@Override
 	public void connexion(Connection connection) {
 		this.connection = connection;
@@ -32,20 +35,26 @@ public class JeuClient extends Jeu implements Global {
 
 	@Override
 	public void reception(Connection connection, Object info) {
-		if(info instanceof JPanel) {
-			// arrivée du panel des murs
-			this.controle.evenementJeuClient(AJOUTPANELMURS, info);
+		if (info instanceof JPanel) {
+			// arrivï¿½e du panel des murs
+			if (!this.mursOk) {
+				this.controle.evenementJeuClient(AJOUTPANELMURS, info);
+				this.mursOk = true;
+			}else {
+				this.controle.evenementJeuClient(MODIFPANELJEU, info);
+			}
 		}
 	}
-	
+
 	@Override
 	public void deconnexion() {
 	}
 
 	/**
-	 * Envoi d'une information vers le serveur
-	 * fais appel une fois à l'envoi dans la classe Jeu
-	 * @param info information à envoyer au serveur
+	 * Envoi d'une information vers le serveur fais appel une fois ï¿½ l'envoi dans la
+	 * classe Jeu
+	 * 
+	 * @param info information ï¿½ envoyer au serveur
 	 */
 	public void envoi(String info) {
 		super.envoi(this.connection, info);

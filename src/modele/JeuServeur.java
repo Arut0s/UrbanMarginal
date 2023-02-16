@@ -1,14 +1,17 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+
+import javax.swing.JLabel;
 
 import controleur.Controle;
 import controleur.Global;
 import outils.connexion.Connection;
 
 /**
- * Gestion du jeu côté serveur
+ * Gestion du jeu cï¿½tï¿½ serveur
  *
  */
 public class JeuServeur extends Jeu implements Global {
@@ -18,13 +21,13 @@ public class JeuServeur extends Jeu implements Global {
 	 */
 	private ArrayList<Mur> lesMurs = new ArrayList<Mur>() ;
 	/**
-	 * Dictionnaire de joueurs indexé sur leur objet de connexion
+	 * Dictionnaire de joueurs indexï¿½ sur leur objet de connexion
 	 */
 	private Hashtable<Connection, Joueur> lesJoueurs = new Hashtable<Connection, Joueur>() ;
 	
 	/**
 	 * Constructeur
-	 * @param controle instance du contrôleur pour les échanges
+	 * @param controle instance du contrï¿½leur pour les ï¿½changes
 	 */
 	public JeuServeur(Controle controle) {
 		super.controle = controle;
@@ -32,7 +35,7 @@ public class JeuServeur extends Jeu implements Global {
 	
 	@Override
 	public void connexion(Connection connection) {
-		this.lesJoueurs.put(connection, new Joueur());
+		this.lesJoueurs.put(connection, new Joueur(this));
 	}
 
 	@Override
@@ -41,11 +44,11 @@ public class JeuServeur extends Jeu implements Global {
 		String ordre = infos[0];
 		switch(ordre) {
 		case PSEUDO :
-			// arrivée des informations d'un nouveau joueur
+			// arrivï¿½e des informations d'un nouveau joueur
 			controle.evenementJeuServeur(AJOUTPANELMURS, connection);
 			String pseudo = infos[1];
 			int numPerso = Integer.parseInt(infos[2]);
-			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
+			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso,this.lesJoueurs.values(), this.lesMurs);
 			break;
 		}
 	}
@@ -56,19 +59,26 @@ public class JeuServeur extends Jeu implements Global {
 
 	/**
 	 * Envoi d'une information vers tous les clients
-	 * fais appel plusieurs fois à l'envoi de la classe Jeu
+	 * fais appel plusieurs fois ï¿½ l'envoi de la classe Jeu
 	 */
-	public void envoi() {
+	public void envoiJeuATous() {
+		for(Connection connection : this.lesJoueurs.keySet()) {
+			this.controle.evenementJeuServeur(MODIFPANELJEU, connection);
+		}
 	}
 
 	/**
-	 * Génération des murs
+	 * Gï¿½nï¿½ration des murs
 	 */
 	public void constructionMurs() {
 		for(int k=0 ; k < NBMURS ; k++) {
 			this.lesMurs.add(new Mur());
 			this.controle.evenementJeuServeur(AJOUTMUR, lesMurs.get(lesMurs.size()-1).getjLabel());
 		}
+	}
+	
+	public void ajoutJLabelJeuArene(JLabel jLabel) {
+		this.controle.evenementJeuServeur(AJOUTLABELJEU, jLabel);
 	}
 	
 }

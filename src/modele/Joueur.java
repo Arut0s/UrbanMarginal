@@ -1,5 +1,14 @@
 package modele;
 
+import java.awt.Font;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 import controleur.Global;
 
 /**
@@ -11,113 +20,168 @@ public class Joueur extends Objet implements Global {
 	/**
 	 * pseudo saisi
 	 */
-	private String pseudo ;
+	private String pseudo;
 	/**
-	 * n° correspondant au personnage (avatar) pour le fichier correspondant
+	 * nï¿½ correspondant au personnage (avatar) pour le fichier correspondant
 	 */
-	private int numPerso ; 
+	private int numPerso;
 	/**
 	 * instance de JeuServeur pour communiquer avec lui
 	 */
-	private JeuServeur jeuServeur ;
+	private JeuServeur jeuServeur;
 	/**
-	 * numéro d'étape dans l'animation (de la marche, touché ou mort)
+	 * numï¿½ro d'ï¿½tape dans l'animation (de la marche, touchï¿½ ou mort)
 	 */
-	private int etape ;
+	private int etape;
 	/**
 	 * la boule du joueur
 	 */
-	private Boule boule ;
+	private Boule boule;
 	/**
 	 * vie restante du joueur
 	 */
-	private int vie ; 
+	private int vie;
 	/**
-	 * tourné vers la gauche (0) ou vers la droite (1)
+	 * tournï¿½ vers la gauche (0) ou vers la droite (1)
 	 */
-	private int orientation ;
-	
+	private int orientation;
+	/**
+	 * Label message
+	 */
+	private JLabel message;
+
 	/**
 	 * Constructeur
 	 */
-	public Joueur() {
+	public Joueur(JeuServeur jeuServeur) {
+		this.jeuServeur = jeuServeur;
+		this.vie = MAXVIE;
+		this.orientation = DROITE;
+		this.etape = 1;
 	}
 
 	/**
-	 * Initialisation d'un joueur (pseudo et numéro, calcul de la 1ère position, affichage, création de la boule)
-	 * @param numPerso numéro du personnage
-	 * @param pseudo pseudo du joueur
+	 * Initialisation d'un joueur (pseudo et numï¿½ro, calcul de la 1ï¿½re position,
+	 * affichage, crï¿½ation de la boule)
+	 * 
+	 * @param numPerso numï¿½ro du personnage
+	 * @param pseudo   pseudo du joueur
 	 */
-	public void initPerso(String pseudo, int numPerso) {
+	public void initPerso(String pseudo, int numPerso, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
 		this.pseudo = pseudo;
 		this.numPerso = numPerso;
-		System.out.println("joueur "+pseudo+" - num perso "+numPerso+" créé");
+		System.out.println("joueur " + pseudo + " - num perso " + numPerso + " cree");
+		// crÃ©ation du label
+		super.jLabel = new JLabel();
+		// crÃ©ation label message
+		this.message = new JLabel();
+		message.setHorizontalAlignment(SwingConstants.CENTER);
+		message.setFont(new Font("Dialog", Font.PLAIN, 8));
+		// Calcul premiÃ¨re position du joueur
+		this.premierePosition(lesJoueurs, lesMurs);
+		// Insertion dans l'arÃ¨ne des 2 labels
+		this.jeuServeur.ajoutJLabelJeuArene(jLabel);
+		this.jeuServeur.ajoutJLabelJeuArene(message);
+		//affichage
+		this.affiche(MARCHE, this.etape);
+		
+
 	}
 
 	/**
-	 * Calcul de la première position aléatoire du joueur (sans chevaucher un autre joueur ou un mur)
+	 * Calcul de la premiï¿½re position alï¿½atoire du joueur (sans chevaucher un autre
+	 * joueur ou un mur)
 	 */
-	private void premierePosition() {
+	private void premierePosition(Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+		jLabel.setBounds(0, 0, LARGEURPERSO, HAUTEURPERSO);
+		do {
+			posX = (int) Math.round(Math.random() * (LARGEURARENE - LARGEURPERSO));
+			posY = (int) Math.round(Math.random() * (HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE));
+		} while (this.toucheJoueur(lesJoueurs) || this.toucheMur(lesMurs));
 	}
-	
+
 	/**
 	 * Affiche le personnage et son message
 	 */
-	public void affiche() {
+	public void affiche(String etat, int etape) {
+		// positionnement du personnage et affectation de la bonne image
+		super.jLabel.setBounds(posX, posY, LARGEURPERSO, HAUTEURPERSO);
+		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+etat+etape+"d"+this.orientation+EXTFICHIERPERSO;
+		URL resource = getClass().getClassLoader().getResource(chemin);
+		super.jLabel.setIcon(new ImageIcon(resource));
+		//Label message
+		this.message.setBounds(posX-10,posY+HAUTEURPERSO,10+LARGEURPERSO,HAUTEURMESSAGE);
+		this.message.setText(this.pseudo+":"+this.vie);
+		this.jeuServeur.envoiJeuATous();
 	}
 
 	/**
-	 * Gère une action reçue et qu'il faut afficher (déplacement, tire de boule...)
+	 * Gï¿½re une action reï¿½ue et qu'il faut afficher (dï¿½placement, tire de boule...)
 	 */
 	public void action() {
 	}
 
 	/**
-	 * Gère le déplacement du personnage
+	 * Gï¿½re le dï¿½placement du personnage
 	 */
-	private void deplace() { 
+	private void deplace() {
 	}
 
 	/**
-	 * Contrôle si le joueur touche un des autres joueurs
+	 * Contrï¿½le si le joueur touche un des autres joueurs
+	 * 
 	 * @return true si deux joueurs se touchent
 	 */
-	private Boolean toucheJoueur() {
-		return null;
+	private Boolean toucheJoueur(Collection<Joueur> lesJoueurs) {
+		for (Joueur unJoueur : lesJoueurs) {
+			if (!this.equals(unJoueur)) {
+				if (super.toucheObjet(unJoueur)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
-	* Contrôle si le joueur touche un des murs
+	 * Contrï¿½le si le joueur touche un des murs
+	 * 
 	 * @return true si un joueur touche un mur
 	 */
-	private Boolean toucheMur() {
-		return null;
+	private Boolean toucheMur(ArrayList<Mur> lesMurs) {
+		for (Mur unMur : lesMurs) {
+			if (super.toucheObjet(unMur)) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
+
 	/**
-	 * Gain de points de vie après avoir touché un joueur
+	 * Gain de points de vie aprï¿½s avoir touchï¿½ un joueur
 	 */
 	public void gainVie() {
 	}
-	
+
 	/**
-	 * Perte de points de vie après avoir été touché 
+	 * Perte de points de vie aprï¿½s avoir ï¿½tï¿½ touchï¿½
 	 */
 	public void perteVie() {
 	}
-	
+
 	/**
-	 * vrai si la vie est à 0
+	 * vrai si la vie est ï¿½ 0
+	 * 
 	 * @return true si vie = 0
 	 */
 	public Boolean estMort() {
 		return null;
 	}
-	
+
 	/**
-	 * Le joueur se déconnecte et disparait
+	 * Le joueur se dï¿½connecte et disparait
 	 */
 	public void departJoueur() {
 	}
-	
+
 }
