@@ -1,6 +1,7 @@
 package modele;
 
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,7 +60,7 @@ public class Joueur extends Objet implements Global {
 		this.orientation = DROITE;
 		this.etape = 1;
 	}
-	
+
 	public String getPseudo() {
 		return this.pseudo;
 	}
@@ -81,13 +82,17 @@ public class Joueur extends Objet implements Global {
 		this.message = new JLabel();
 		message.setHorizontalAlignment(SwingConstants.CENTER);
 		message.setFont(new Font("Dialog", Font.PLAIN, 8));
+		//Création de la boule
+		this.boule = new Boule(this.jeuServeur);
 		// Calcul première position du joueur
 		this.premierePosition(lesJoueurs, lesMurs);
 		// Insertion dans l'arène des 2 labels
 		this.jeuServeur.ajoutJLabelJeuArene(jLabel);
 		this.jeuServeur.ajoutJLabelJeuArene(message);
-		//affichage
+		this.jeuServeur.ajoutJLabelJeuArene(boule.getjLabel());
+		// affichage
 		this.affiche(MARCHE, this.etape);
+		
 		
 
 	}
@@ -110,25 +115,62 @@ public class Joueur extends Objet implements Global {
 	public void affiche(String etat, int etape) {
 		// positionnement du personnage et affectation de la bonne image
 		super.jLabel.setBounds(posX, posY, LARGEURPERSO, HAUTEURPERSO);
-		String chemin = CHEMINPERSONNAGES+PERSO+this.numPerso+etat+etape+"d"+this.orientation+EXTFICHIERPERSO;
+		String chemin = CHEMINPERSONNAGES + PERSO + this.numPerso + etat + etape + "d" + this.orientation
+				+ EXTFICHIERPERSO;
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		super.jLabel.setIcon(new ImageIcon(resource));
-		//Label message
-		this.message.setBounds(posX-10,posY+HAUTEURPERSO,10+LARGEURPERSO,HAUTEURMESSAGE);
-		this.message.setText(this.pseudo+":"+this.vie);
+		// Label message
+		this.message.setBounds(posX - 10, posY + HAUTEURPERSO, 10 + LARGEURPERSO, HAUTEURMESSAGE);
+		this.message.setText(this.pseudo + ":" + this.vie);
 		this.jeuServeur.envoiJeuATous();
 	}
 
 	/**
 	 * G�re une action re�ue et qu'il faut afficher (d�placement, tire de boule...)
 	 */
-	public void action() {
+	public void action(int action, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+		switch (action) {
+		case KeyEvent.VK_UP:
+			posY = deplace(posY,action,-PAS,HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE,lesJoueurs,lesMurs);
+			break;
+		case KeyEvent.VK_DOWN:
+			posY = deplace(posY,action,PAS,HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE,lesJoueurs,lesMurs);
+			break;
+		case KeyEvent.VK_LEFT:
+			orientation = GAUCHE;
+			posX = deplace(posX,action,-PAS,LARGEURARENE-LARGEURPERSO,lesJoueurs,lesMurs);
+			break;
+		case KeyEvent.VK_RIGHT:
+			orientation = DROITE;
+			posX = deplace(posX,action,PAS,LARGEURARENE-LARGEURPERSO,lesJoueurs,lesMurs);
+			break;
+		case KeyEvent.VK_SPACE:
+			if(!this.boule.getjLabel().isVisible()) {
+				this.boule.tireBoule(this,lesMurs);
+			}
+		}
+		affiche(MARCHE,this.etape);
 	}
 
 	/**
 	 * G�re le d�placement du personnage
 	 */
-	private void deplace() {
+	private int deplace(int position, int action, int lepas, int max, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
+		int ancpos = position;
+		position += lepas;
+		position = Math.max(position, 0);
+		position = Math.min(position, max);
+		if(action==KeyEvent.VK_LEFT || action==KeyEvent.VK_RIGHT) {
+			posX=position;
+		}else {
+			posY=position;
+		}
+		//controle collision
+		if(toucheJoueur(lesJoueurs)|| toucheMur(lesMurs)) {
+			position = ancpos;
+		}
+		etape = (etape%NBETAPESMARCHE)+1;
+		return position;
 	}
 
 	/**

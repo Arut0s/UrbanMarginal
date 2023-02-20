@@ -182,4 +182,16 @@ public interface Global {
 	String MODIFTCHAT = "modif chat";
 	
 	String CLIENT = "client";
+	
+	String ACTION = "action";
+	/**
+	 * Valeur d'un pas
+	 */
+	int PAS = 10;
+	
+	int NBETAPESMARCHE = 4;
+	
+	int LARGEURBOULE = 17;
+			
+	int HAUTEURBOULE = 17;
 }

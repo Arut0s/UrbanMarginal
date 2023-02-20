@@ -107,8 +107,8 @@ public class Controle implements AsyncResponse, Global {
 			this.leJeu.envoi((Connection) info, this.frmArene.getJpnJeu());
 			break;
 		case AJOUTPHRASE:
-			this.frmArene.ajoutTchat((String)info);
-			((JeuServeur)this.leJeu).envoi(this.frmArene.getTxtTchat());
+			this.frmArene.ajoutTchat((String) info);
+			((JeuServeur) this.leJeu).envoi(this.frmArene.getTxtTchat());
 			break;
 		}
 	}
@@ -125,18 +125,21 @@ public class Controle implements AsyncResponse, Global {
 			this.frmArene.setJpnMurs((JPanel) info);
 			break;
 		case MODIFPANELJEU:
-			this.frmArene.setJpnJeu((JPanel)info);
+			this.frmArene.setJpnJeu((JPanel) info);
 			break;
 		case MODIFTCHAT:
-			this.frmArene.setTxtTchat((String)info);
+			this.frmArene.setTxtTchat((String) info);
 			break;
 		}
 	}
-	
-	public void evenementArene(String info) {
-		((JeuClient)this.leJeu).envoi(TCHAT+STRINGSEPARE+info);
+
+	public void evenementArene(Object info) {
+		if (info instanceof String) {
+			((JeuClient) this.leJeu).envoi(TCHAT + STRINGSEPARE + info);
+		} else if (info instanceof Integer) {
+			((JeuClient) this.leJeu).envoi(ACTION + STRINGSEPARE + info);
 		}
-	
+	}
 
 	/**
 	 * Envoi d'informations vers l'ordinateur distant
