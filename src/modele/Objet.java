@@ -30,6 +30,21 @@ public abstract class Objet {
 	public JLabel getjLabel() {
 		return jLabel;
 	}
+	
+	/**
+	 * getter sur posX
+	 */
+	public int getPosX() {
+		return posX;
+	}
+	
+	/**
+	 * getter sur posY
+	 */
+	public int getPosY() {
+		return posY;
+	}
+			
 
 	/**
 	 * contr�le si l'objet actuel touche l'objet pass� en param�tre
@@ -47,9 +62,9 @@ public abstract class Objet {
 		}
 	}
 	
-	public Objet toucheCollectionObjet(Collection<Objet> lesObjets) {
+	public Objet toucheCollectionObjets(Collection<Objet> lesObjets) {
 		for (Objet unObjet : lesObjets) {
-			if (!this.equals(unObjet)) {
+			if (!unObjet.equals(this)) {
 				if (toucheObjet(unObjet)) {
 					return unObjet;
 				}

@@ -191,6 +191,10 @@ public interface Global {
 	
 	int NBETAPESMARCHE = 4;
 	
+	int NBETAPESTOUCHE = 2;
+	
+	int NBETAPESMORT = 2;
+	
 	int LARGEURBOULE = 17;
 			
 	int HAUTEURBOULE = 17;

@@ -33,6 +33,13 @@ public class JeuServeur extends Jeu implements Global {
 		super.controle = controle;
 	}
 	
+	/**
+	 * Getter sur Collection des joueurs
+	 */
+	public Collection getLesJoueurs(){
+		return lesJoueurs.values();
+	}
+	
 	@Override
 	public void connexion(Connection connection) {
 		this.lesJoueurs.put(connection, new Joueur(this));
