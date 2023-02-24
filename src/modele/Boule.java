@@ -60,6 +60,8 @@ public class Boule extends Objet implements Global, Runnable {
 		this.attaquant.affiche(MARCHE, 1);
 		// rendre la boule visible
 		super.jLabel.setVisible(true);
+		//jouer son de la boule
+		this.jeuServeur.envoi(FIGHT);
 		// préparer la victime (dans le cas où un joueur est touché)
 		Joueur victime = null;
 		// pas positif ou négatif (suivant l'orientation du joueur) pour faire avancer
@@ -86,11 +88,13 @@ public class Boule extends Objet implements Global, Runnable {
 		if (victime != null && !victime.estMort()) {
 			victime.perteVie();
 			attaquant.gainVie();
+			this.jeuServeur.envoi(HURT);
 			for (int k = 1; k <= NBETAPESTOUCHE; k++) {
 				victime.affiche(TOUCHE, k);
 				pause(80,0);
 			}
 			if (victime.estMort()) {
+				this.jeuServeur.envoi(DEATH);
 				for (int k = 1; k <= NBETAPESMORT; k++) {
 					victime.affiche(MORT, k);
 					pause(80,0);

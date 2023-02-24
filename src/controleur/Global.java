@@ -42,6 +42,32 @@ public interface Global {
 	 * Chemin du dossier des sons
 	 */
 	String CHEMINSONS = "sons"+CHEMINSEPARATOR;
+	
+	String SONPRECEDENT = CHEMINSONS+"precedent.wav";
+	
+	String SONSUIVANT = CHEMINSONS+"suivant.wav";
+	
+	String SONWELCOME = CHEMINSONS+"welcome.wav";
+	
+	String SONGO = CHEMINSONS+"go.wav";
+	
+	String SONFIGHT = CHEMINSONS+"fight.wav";
+	/**
+	 * Chemin du son hurt (joueur blessé)
+	 */
+	String SONHURT = CHEMINSONS+"hurt.wav";
+	/**
+	 * Chemin du son death (joueur tué)
+	 */
+	String SONDEATH = CHEMINSONS+"death.wav";
+	
+	String[] SON = {CHEMINSONS+"fight.wav", CHEMINSONS+"hurt.wav", CHEMINSONS+"death.wav"};
+	
+	int FIGHT = 0;
+	
+	int HURT = 1;
+	
+	int DEATH = 2;
 	/**
 	 * Chemin de l'image de fond de la vue ChoixJoueur
 	 */
@@ -198,4 +224,6 @@ public interface Global {
 	int LARGEURBOULE = 17;
 			
 	int HAUTEURBOULE = 17;
+	
+	String PLAYSON = "play son";
 }
