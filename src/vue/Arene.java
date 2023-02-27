@@ -154,6 +154,18 @@ public class Arene extends JFrame implements Global {
 		case KeyEvent.VK_SPACE:
 			touche = e.getKeyCode();
 			break;
+		case KeyEvent.VK_Z:
+			touche = KeyEvent.VK_UP;
+			break;
+		case KeyEvent.VK_S:
+			touche = KeyEvent.VK_DOWN;
+			break;
+		case KeyEvent.VK_Q:
+			touche = KeyEvent.VK_LEFT;
+			break;
+		case KeyEvent.VK_D:
+			touche = KeyEvent.VK_RIGHT;
+			break;
 		}
 		if(touche != -1) {
 			this.controle.evenementArene(touche);

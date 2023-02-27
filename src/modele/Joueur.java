@@ -50,6 +50,7 @@ public class Joueur extends Objet implements Global {
 	 * Label message
 	 */
 	private JLabel message;
+	private int hautbas = 0;
 
 	/**
 	 * Constructeur
@@ -120,10 +121,17 @@ public class Joueur extends Objet implements Global {
 	public void affiche(String etat, int etape) {
 		// positionnement du personnage et affectation de la bonne image
 		super.jLabel.setBounds(posX, posY, LARGEURPERSO, HAUTEURPERSO);
-		String chemin = CHEMINPERSONNAGES + PERSO + this.numPerso + etat + etape + "d" + this.orientation
-				+ EXTFICHIERPERSO;
-		URL resource = getClass().getClassLoader().getResource(chemin);
-		super.jLabel.setIcon(new ImageIcon(resource));
+		if (this.orientation == GAUCHE || this.orientation == DROITE) {
+			String chemin = CHEMINPERSONNAGES + PERSO + this.numPerso + etat + etape + "d" + this.orientation
+					+ EXTFICHIERPERSO;
+			URL resource = getClass().getClassLoader().getResource(chemin);
+			super.jLabel.setIcon(new ImageIcon(resource));
+			hautbas = orientation;
+		} else {
+			String chemin = CHEMINPERSONNAGES + PERSO + this.numPerso + etat + etape + "d" + hautbas + EXTFICHIERPERSO;
+			URL resource = getClass().getClassLoader().getResource(chemin);
+			super.jLabel.setIcon(new ImageIcon(resource));
+		}
 		// Label message
 		this.message.setBounds(posX - 10, posY + HAUTEURPERSO, 10 + LARGEURPERSO, HAUTEURMESSAGE);
 		this.message.setText(this.pseudo + ":" + this.vie);
@@ -138,9 +146,11 @@ public class Joueur extends Objet implements Global {
 			switch (action) {
 			case KeyEvent.VK_UP:
 				posY = deplace(posY, action, -PAS, HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE, lesJoueurs, lesMurs);
+				orientation = HAUT;
 				break;
 			case KeyEvent.VK_DOWN:
 				posY = deplace(posY, action, PAS, HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE, lesJoueurs, lesMurs);
+				orientation = BAS;
 				break;
 			case KeyEvent.VK_LEFT:
 				orientation = GAUCHE;
@@ -207,7 +217,7 @@ public class Joueur extends Objet implements Global {
 	 * Le joueur se d�connecte et disparait
 	 */
 	public void departJoueur() {
-		if(super.jLabel != null) {
+		if (super.jLabel != null) {
 			super.jLabel.setVisible(false);
 			this.message.setVisible(false);
 			this.boule.getjLabel().setVisible(false);

@@ -176,6 +176,10 @@ public interface Global {
 	 * Orientation du perso a gauche
 	 */
 	int GAUCHE = 0;
+	
+	int HAUT = 2;
+	
+	int BAS = 3;
 	/**
 	 * Message "serveur" pour la cr�ation d'un serveur
 	 */
