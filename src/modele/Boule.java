@@ -110,6 +110,7 @@ public class Boule extends Objet implements Global, Runnable {
 					victime.affiche(MORT, k);
 					pause(80, 0);
 				}
+				victime.removeMort();
 			} else {
 				victime.affiche(MARCHE, 1);
 			}

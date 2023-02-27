@@ -66,6 +66,9 @@ public class JeuServeur extends Jeu implements Global {
 		case ACTION:
 			Integer action = Integer.parseInt(infos[1]);
 			this.lesJoueurs.get(connection).action(action, this.lesJoueurs.values(), this.lesMurs);
+			break;
+		case FINJEU:
+			System.exit(0);
 		}
 	}
 	

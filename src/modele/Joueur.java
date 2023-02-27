@@ -212,6 +212,14 @@ public class Joueur extends Objet implements Global {
 	public Boolean estMort() {
 		return (this.vie == 0);
 	}
+	
+	public void removeMort() {
+		Collection lesJoueurs = this.jeuServeur.getLesJoueurs();
+		lesJoueurs.remove(this);
+		if(lesJoueurs.size() == 1) {
+			this.jeuServeur.reception(null, FINJEU);
+		}
+	}
 
 	/**
 	 * Le joueur se d�connecte et disparait

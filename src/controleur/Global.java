@@ -230,4 +230,6 @@ public interface Global {
 	int HAUTEURBOULE = 17;
 	
 	String PLAYSON = "play son";
+	
+	String FINJEU = "fin jeu";
 }
