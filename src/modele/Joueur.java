@@ -64,7 +64,7 @@ public class Joueur extends Objet implements Global {
 	public String getPseudo() {
 		return this.pseudo;
 	}
-	
+
 	/**
 	 * getter sur l'orientation
 	 */
@@ -89,7 +89,7 @@ public class Joueur extends Objet implements Global {
 		this.message = new JLabel();
 		message.setHorizontalAlignment(SwingConstants.CENTER);
 		message.setFont(new Font("Dialog", Font.PLAIN, 8));
-		//Création de la boule
+		// Création de la boule
 		this.boule = new Boule(this.jeuServeur);
 		// Calcul première position du joueur
 		this.premierePosition(lesJoueurs, lesMurs);
@@ -99,8 +99,6 @@ public class Joueur extends Objet implements Global {
 		this.jeuServeur.ajoutJLabelJeuArene(boule.getjLabel());
 		// affichage
 		this.affiche(MARCHE, this.etape);
-		
-		
 
 	}
 
@@ -113,7 +111,7 @@ public class Joueur extends Objet implements Global {
 		do {
 			posX = (int) Math.round(Math.random() * (LARGEURARENE - LARGEURPERSO));
 			posY = (int) Math.round(Math.random() * (HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE));
-		} while (toucheCollectionObjets(lesJoueurs)!=null || toucheCollectionObjets(lesMurs) !=null);
+		} while (toucheCollectionObjets(lesJoueurs) != null || toucheCollectionObjets(lesMurs) != null);
 	}
 
 	/**
@@ -136,27 +134,29 @@ public class Joueur extends Objet implements Global {
 	 * G�re une action re�ue et qu'il faut afficher (d�placement, tire de boule...)
 	 */
 	public void action(int action, Collection<Joueur> lesJoueurs, ArrayList<Mur> lesMurs) {
-		switch (action) {
-		case KeyEvent.VK_UP:
-			posY = deplace(posY,action,-PAS,HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE,lesJoueurs,lesMurs);
-			break;
-		case KeyEvent.VK_DOWN:
-			posY = deplace(posY,action,PAS,HAUTEURARENE-HAUTEURPERSO-HAUTEURMESSAGE,lesJoueurs,lesMurs);
-			break;
-		case KeyEvent.VK_LEFT:
-			orientation = GAUCHE;
-			posX = deplace(posX,action,-PAS,LARGEURARENE-LARGEURPERSO,lesJoueurs,lesMurs);
-			break;
-		case KeyEvent.VK_RIGHT:
-			orientation = DROITE;
-			posX = deplace(posX,action,PAS,LARGEURARENE-LARGEURPERSO,lesJoueurs,lesMurs);
-			break;
-		case KeyEvent.VK_SPACE:
-			if(!this.boule.getjLabel().isVisible()) {
-				this.boule.tireBoule(this,lesMurs);
+		if (!this.estMort()) {
+			switch (action) {
+			case KeyEvent.VK_UP:
+				posY = deplace(posY, action, -PAS, HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE, lesJoueurs, lesMurs);
+				break;
+			case KeyEvent.VK_DOWN:
+				posY = deplace(posY, action, PAS, HAUTEURARENE - HAUTEURPERSO - HAUTEURMESSAGE, lesJoueurs, lesMurs);
+				break;
+			case KeyEvent.VK_LEFT:
+				orientation = GAUCHE;
+				posX = deplace(posX, action, -PAS, LARGEURARENE - LARGEURPERSO, lesJoueurs, lesMurs);
+				break;
+			case KeyEvent.VK_RIGHT:
+				orientation = DROITE;
+				posX = deplace(posX, action, PAS, LARGEURARENE - LARGEURPERSO, lesJoueurs, lesMurs);
+				break;
+			case KeyEvent.VK_SPACE:
+				if (!this.boule.getjLabel().isVisible()) {
+					this.boule.tireBoule(this, lesMurs);
+				}
 			}
+			affiche(MARCHE, this.etape);
 		}
-		affiche(MARCHE,this.etape);
 	}
 
 	/**
@@ -167,16 +167,16 @@ public class Joueur extends Objet implements Global {
 		position += lepas;
 		position = Math.max(position, 0);
 		position = Math.min(position, max);
-		if(action==KeyEvent.VK_LEFT || action==KeyEvent.VK_RIGHT) {
-			posX=position;
-		}else {
-			posY=position;
+		if (action == KeyEvent.VK_LEFT || action == KeyEvent.VK_RIGHT) {
+			posX = position;
+		} else {
+			posY = position;
 		}
-		//controle collision
-		if(toucheCollectionObjets(lesJoueurs)!=null|| toucheCollectionObjets(lesMurs)!= null) {
+		// controle collision
+		if (toucheCollectionObjets(lesJoueurs) != null || toucheCollectionObjets(lesMurs) != null) {
 			position = ancpos;
 		}
-		etape = (etape%NBETAPESMARCHE)+1;
+		etape = (etape % NBETAPESMARCHE) + 1;
 		return position;
 	}
 
@@ -200,13 +200,19 @@ public class Joueur extends Objet implements Global {
 	 * @return true si vie = 0
 	 */
 	public Boolean estMort() {
-		return (this.vie==0);
+		return (this.vie == 0);
 	}
 
 	/**
 	 * Le joueur se d�connecte et disparait
 	 */
 	public void departJoueur() {
+		if(super.jLabel != null) {
+			super.jLabel.setVisible(false);
+			this.message.setVisible(false);
+			this.boule.getjLabel().setVisible(false);
+			this.jeuServeur.envoiJeuATous();
+		}
 	}
 
 }
